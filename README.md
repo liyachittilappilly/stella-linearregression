@@ -1,73 +1,123 @@
-# Welcome to your Lovable project
 
-## Project info
 
-**URL**: https://lovable.dev/projects/17a160c9-1b30-4888-b2d6-56c6c9936b32
+# Stella - Supervised Learning Simplified
 
-## How can I edit this code?
+A minimalistic, elegant web application for exploring and implementing simple linear regression models with a sophisticated dark-themed interface.
 
-There are several ways of editing your application.
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/17a160c9-1b30-4888-b2d6-56c6c9936b32) and start prompting.
+- **Dataset Upload & Exploration**: Upload CSV files and instantly view key statistics
+- **Interactive Data Visualization**: Create dynamic plots using Plotly.js
+- **Data Preprocessing**: Replace text values with numerical data for modeling
+- **Model Training**: Train linear regression models with customizable parameters
+- **Performance Evaluation**: Visualize predictions and view key metrics
+- **Responsive Design**: Fully functional across all device sizes
+- **Dark Theme**: Elegant monochrome gradient background with glowing accents
 
-Changes made via Lovable will be committed automatically to this repo.
+## Tech Stack
 
-**Use your preferred IDE**
+- **Frontend**: HTML5, CSS3 (Grid, Flexbox, Variables), JavaScript (ES6+)
+- **Visualization**: Plotly.js for interactive charts
+- **Data Processing**: Custom JavaScript implementation of Pandas-like operations
+- **Styling**: Minimalistic design with smooth transitions and micro-interactions
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Prerequisites
 
-Follow these steps:
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- No server-side requirements (fully client-side application)
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Installation
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/stella-ai.git
 ```
 
-**Edit a file directly in GitHub**
+2. Navigate to the project directory:
+```bash
+cd stella-ai
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. Open `index.html` in your browser:
+```bash
+# For macOS
+open index.html
 
-**Use GitHub Codespaces**
+# For Windows
+start index.html
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# For Linux
+xdg-open index.html
+```
 
-## What technologies are used for this project?
+## Usage
 
-This project is built with:
+1. **Upload Dataset**: Click "Upload Dataset" to select a CSV file from your computer
+2. **Explore Data**: View automatically generated statistics including `.head()`, `.shape()`, `.info()`, `.describe()`, and null value counts
+3. **Visualize Data**: Select columns and plot type to generate interactive visualizations
+4. **Preprocess Data**: Use the data replacement tool to convert text values to numerical data
+5. **Train Model**: Configure train-test split parameters and select features/target
+6. **Evaluate Results**: View model performance metrics and prediction visualization
+7. **Export Results**: Download model summary as PDF or CSV
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Project Structure
 
-## How can I deploy this project?
+```
+stella-ai/
+├── index.html          # Main HTML file
+├── css/
+│   ├── style.css       # Main stylesheet
+│   └── variables.css   # CSS variables
+├── js/
+│   ├── app.js          # Main application logic
+│   ├── dataProcessor.js # Data manipulation functions
+│   ├── modelTrainer.js # Linear regression implementation
+│   └── visualizer.js   # Plotly.js integration
+├── assets/
+│   ├── logo.svg        # Stella logo
+│   └── sample-data.csv # Sample dataset for testing
+└── README.md           # This file
+```
 
-Simply open [Lovable](https://lovable.dev/projects/17a160c9-1b30-4888-b2d6-56c6c9936b32) and click on Share -> Publish.
+## Functionality
 
-## Can I connect a custom domain to my Lovable project?
+### Data Processing
+- CSV parsing with PapaParse
+- Pandas-like operations implemented in JavaScript:
+  - `.head()` - First 5 rows
+  - `.shape()` - Dataset dimensions
+  - `.info()` - Data types and non-null counts
+  - `.describe()` - Statistical summary
+  - `.isnull().sum()` - Null value counts
 
-Yes, you can!
+### Model Training
+- Simple linear regression implementation
+- Train-test split functionality
+- Feature selection and target variable specification
+- Model evaluation metrics:
+  - Mean Squared Error (MSE)
+  - Mean Absolute Error (MAE)
+  - R-squared (R²) score
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Visualization
+- Interactive plots using Plotly.js
+- Support for bar, line, scatter, and histogram charts
+- Dynamic axis selection
+- Prediction vs actual scatter plot
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
