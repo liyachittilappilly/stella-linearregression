@@ -2,6 +2,10 @@ import { useState } from 'react';
 import Header from '../components/Header';
 import FileUpload from '../components/FileUpload';
 import DataDisplay from '../components/DataDisplay';
+import DataExploration from '../components/DataExploration';
+import DataPreprocessing from '../components/DataPreprocessing';
+import ModelTraining from '../components/ModelTraining';
+import Results from '../components/Results';
 import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
@@ -9,6 +13,10 @@ const Index = () => {
   const [data, setData] = useState<any[]>([]);
   const [fileName, setFileName] = useState('');
   const [currentStep, setCurrentStep] = useState(1);
+  const [model, setModel] = useState<any>(null);
+  const [split, setSplit] = useState<any>(null);
+  const [features, setFeatures] = useState<string[]>([]);
+  const [target, setTarget] = useState('');
 
   const handleDataLoad = (loadedData: any[], loadedFileName: string) => {
     setData(loadedData);
@@ -20,9 +28,25 @@ const Index = () => {
     });
   };
 
+  const handleDataUpdate = (newData: any[]) => {
+    setData(newData);
+    toast({
+      title: "Data Updated",
+      description: "Preprocessing changes have been applied to your dataset.",
+    });
+  };
+
+  const handleModelTrained = (trainedModel: any, trainedSplit: any, featureList: string[], targetCol: string) => {
+    setModel(trainedModel);
+    setSplit(trainedSplit);
+    setFeatures(featureList);
+    setTarget(targetCol);
+    setCurrentStep(5);
+  };
+
   const handleError = (error: string) => {
     toast({
-      title: "Upload Error",
+      title: "Error",
       description: error,
       variant: "destructive"
     });
@@ -99,112 +123,17 @@ const Index = () => {
               {/* Data Display */}
               {data.length > 0 && <DataDisplay data={data} fileName={fileName} />}
 
-              {/* Data Exploration Section */}
-              {data.length > 0 && (
-                <section className="glass-card p-8 rounded-xl animate-slide-up">
-                  <h2 className="text-2xl font-semibold mb-6 text-foreground">Data Exploration</h2>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-medium text-foreground mb-3">
-                        Select Column for Value Counts
-                      </label>
-                      <select className="input-field w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20">
-                        <option value="">Choose a column...</option>
-                        {Object.keys(data[0] || {}).map(col => (
-                          <option key={col} value={col}>{col}</option>
-                        ))}
-                      </select>
-                    </div>
-                    
-                    <div className="flex items-end">
-                      <button className="btn-primary px-6 py-3 rounded-lg font-medium transition-all hover:scale-105 w-full">
-                        Generate Value Count
-                      </button>
-                    </div>
-                  </div>
+              {/* Data Exploration */}
+              {data.length > 0 && <DataExploration data={data} />}
 
-                  <div className="mt-8 p-6 border border-border/20 rounded-lg bg-muted/10">
-                    <h3 className="text-lg font-semibold text-foreground mb-4">Plotting Controls</h3>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">X-axis</label>
-                        <select className="input-field w-full px-3 py-2 rounded-lg">
-                          <option value="">Select X-axis...</option>
-                          {Object.keys(data[0] || {}).map(col => (
-                            <option key={col} value={col}>{col}</option>
-                          ))}
-                        </select>
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Y-axis</label>
-                        <select className="input-field w-full px-3 py-2 rounded-lg">
-                          <option value="">Select Y-axis...</option>
-                          {Object.keys(data[0] || {}).map(col => (
-                            <option key={col} value={col}>{col}</option>
-                          ))}
-                        </select>
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-foreground mb-2">Plot Type</label>
-                        <select className="input-field w-full px-3 py-2 rounded-lg">
-                          <option value="scatter">Scatter</option>
-                          <option value="line">Line</option>
-                          <option value="bar">Bar</option>
-                          <option value="histogram">Histogram</option>
-                        </select>
-                      </div>
-                      
-                      <div className="flex items-end">
-                        <button className="btn-glass px-4 py-2 rounded-lg font-medium w-full transition-all hover:scale-105">
-                          Generate Plot
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              )}
+              {/* Data Preprocessing */}
+              {data.length > 0 && <DataPreprocessing data={data} onDataUpdate={handleDataUpdate} />}
 
-              {/* Data Preprocessing Section */}
-              {data.length > 0 && (
-                <section className="glass-card p-8 rounded-xl animate-slide-up">
-                  <h2 className="text-2xl font-semibold mb-6 text-foreground">Data Preprocessing</h2>
-                  
-                  <div className="space-y-6">
-                    <div className="p-6 border border-border/20 rounded-lg bg-muted/10">
-                      <h3 className="text-lg font-semibold text-foreground mb-4">Data Replacement Tool</h3>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-foreground mb-2">Column Name</label>
-                          <select className="input-field w-full px-3 py-2 rounded-lg">
-                            <option value="">Select column...</option>
-                            {Object.keys(data[0] || {}).map(col => (
-                              <option key={col} value={col}>{col}</option>
-                            ))}
-                          </select>
-                        </div>
-                        
-                        <div>
-                          <label className="block text-sm font-medium text-foreground mb-2">Replace With</label>
-                          <input
-                            type="text"
-                            placeholder="Enter replacement value..."
-                            className="input-field w-full px-3 py-2 rounded-lg"
-                          />
-                        </div>
-                      </div>
-                      
-                      <button className="btn-glass px-6 py-2 rounded-lg font-medium mt-4 transition-all hover:scale-105">
-                        Apply Replacement
-                      </button>
-                    </div>
-                  </div>
-                </section>
-              )}
+              {/* Model Training */}
+              {data.length > 0 && <ModelTraining data={data} onModelTrained={handleModelTrained} />}
+
+              {/* Results */}
+              {model && split && <Results model={model} split={split} features={features} target={target} />}
             </div>
 
             {/* Sidebar */}
